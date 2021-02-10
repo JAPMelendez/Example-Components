@@ -1,9 +1,22 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Dogs.module.css";
+import axios from 'axios';
 
 const DogsScreen = () => {
+  const [image, setimage] = useState('')
+  const handleRandom = () =>{
+    axios({
+      method:'GET',
+      url: process.env.REACT_APP_APIDOG,
+    })
+    .then(function (response){
+      setimage(response.data.message);
+    })
+  }
+  
   return (
+    
     <section className={styles.section}>
       <h1>DogsScreen</h1>
       <h3>First task</h3>
@@ -20,8 +33,11 @@ const DogsScreen = () => {
         Considerations, the image need to be fit in the green square
       </p>
       <div className={styles.content}>
-        <div className={styles.img_content}>img</div>
-        <button>put your random button here</button>
+        <div className={styles.img_content}>
+        <img src={image} alt="Girl in a jacket" className={styles.imgdog}/> 
+
+        </div>
+        <button onClick = {handleRandom}  >put your random button here</button>
       </div>
     </section>
   );
